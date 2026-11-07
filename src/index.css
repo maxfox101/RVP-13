@@ -1,0 +1,1053 @@
+/* ==========================================================================
+   БазМет — общий файл стилей
+   Подключается одной строкой <link rel="stylesheet" href="style.css">
+   на каждой странице — так все правки цвета/отступов делаются в одном месте.
+   ========================================================================== */
+
+:root {
+  --sage: #a9b79c;
+  --sage-dark: #8fa082;
+  --gold: #e6c989;
+  --gold-dark: #d1a94a;
+  --dark: #1e1e1e;
+  --text: #2b2b2b;
+  --white: #ffffff;
+  --bg: #f4f5f0;
+  --radius: 26px;
+  --radius-sm: 16px;
+  --max-width: 1240px;
+}
+
+/* ---------- Базовый сброс и типографика ---------- */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 18px;
+  line-height: 1.55;
+}
+
+h1, h2, h3 {
+  line-height: 1.2;
+  margin: 0 0 16px;
+}
+
+h1 {
+  font-size: 2rem;
+}
+
+h2 {
+  font-size: 1.5rem;
+}
+
+h3 {
+  font-size: 1.25rem;
+}
+
+a {
+  color: var(--dark);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-sm);
+  display: block;
+}
+
+/* ---------- Навигация ----------
+   Положение пунктов меню в ряд задаёт display:flex на <ul>;
+   flex-wrap позволяет пунктам переходить на новую строку на узком экране. */
+header {
+  max-width: var(--max-width);
+  margin: 22px auto;
+  padding: 0 20px;
+  width: 100%;
+}
+
+header nav {
+  background: var(--sage);
+  border-radius: 48px;
+  padding: 12px 22px;
+  width: 100%;
+}
+
+header nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 10px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+header nav a {
+  display: inline-block;
+  padding: 12px 28px;
+  border-radius: 28px;
+  text-decoration: none;
+  color: #1e1e1e;
+  font-weight: 500;
+  font-size: 1.1rem;
+  white-space: nowrap;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+header nav a:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+header nav a[aria-current="page"],
+header nav a.active {
+  background: var(--gold);
+  color: #3b2f13;
+  font-weight: 600;
+}
+
+header nav a[aria-current="page"]:hover,
+header nav a.active:hover {
+  background: var(--gold);
+}
+
+/* ---------- Основной контейнер ---------- */
+main {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 20px 56px;
+  flex: 1 0 auto;
+  width: 100%;
+}
+
+footer {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 32px 16px 24px;
+  text-align: center;
+  color: #2f3b2c;
+  font-size: 0.9rem;
+}
+
+/* ---------- Hero-блок на главной странице ----------
+   Позиционирование текста над картинкой — position:relative на контейнере
+   и position:absolute на заголовке/подписи, само изображение растянуто
+   на всю ширину блока через width:100% + object-fit:cover. */
+.hero {
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  color: #ffffff;
+  margin-bottom: 24px;
+  background: none;
+  padding: 0;
+}
+
+.hero img {
+  width: 100%;
+  height: auto;
+  max-height: 420px;
+  object-fit: cover;
+  object-position: center;
+  filter: brightness(0.62);
+  border-radius: var(--radius);
+}
+
+.hero h1 {
+  position: absolute;
+  left: 40px;
+  top: 26%;
+  max-width: 62%;
+  font-size: 2.35rem;
+  border-bottom: 4px solid var(--gold);
+  padding-bottom: 14px;
+}
+
+.hero p {
+  position: absolute;
+  left: 40px;
+  top: 68%;
+  font-size: 1.2rem;
+  letter-spacing: 1px;
+}
+
+/* ---------- Карточки (категории, товары, услуги) ----------
+   Раскладка в ряд управляется display:flex + flex-wrap на родителе;
+   каждая карточка растёт/сжимается через flex: 1 1 200px. */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  margin: 20px 0;
+}
+
+.card {
+  background: var(--sage);
+  color: #1e1e1e;
+  border-radius: var(--radius);
+  padding: 22px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(30, 30, 30, 0.12);
+}
+
+.card h2, .card h3 {
+  margin-top: 0;
+  margin-bottom: 12px;
+  min-height: 3.6em;
+  overflow-wrap: break-word;
+}
+
+.card a {
+  color: #1e1e1e;
+  text-decoration: none;
+}
+
+.card img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  height: auto;
+  object-fit: contain;
+  object-position: center;
+  margin: 0 auto 12px;
+  border-radius: var(--radius-sm);
+  background: #ffffff;
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+.card:hover img {
+  transform: scale(1.03);
+}
+
+.card p {
+  color: #1e1e1e;
+  font-size: 1rem;
+}
+
+.category-carousel {
+  position: relative;
+  background: var(--sage);
+  border-radius: var(--radius);
+  padding: 24px 80px 18px;
+  margin: 12px 0 8px;
+  width: 100%;
+  min-height: 480px;
+  outline: none;
+}
+
+.category-carousel .search-status {
+  color: #1e1e1e;
+}
+
+.carousel-viewport {
+  overflow: hidden;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.carousel-track {
+  display: flex;
+  width: 100%;
+  transition: transform 0.4s ease;
+}
+
+.carousel-slide {
+  box-sizing: border-box;
+  flex: 0 0 100%;
+  width: 100%;
+  text-align: center;
+  text-decoration: none;
+  color: #1e1e1e;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.carousel-slide h3 {
+  margin: 0 0 10px;
+  min-height: 0;
+  color: #1e1e1e;
+}
+
+.carousel-slide img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: contain;
+  background: #ffffff;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+
+.carousel-btn {
+  position: absolute;
+  top: 46%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 50%;
+  background: var(--gold);
+  color: #3b2f13;
+  font-size: 1.8rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.carousel-prev {
+  left: 16px;
+}
+
+.carousel-next {
+  right: 16px;
+}
+
+.carousel-btn:hover {
+  background: var(--gold-dark);
+  transform: translateY(-50%) scale(1.08);
+}
+
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.carousel-dot {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  position: relative;
+}
+
+.carousel-dot::before {
+  content: "";
+  position: absolute;
+  left: 7px;
+  top: 7px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(30, 30, 30, 0.4);
+}
+
+.carousel-dot.is-active::before {
+  background: #3b2f13;
+}
+
+.service-card {
+  padding-bottom: 24px;
+}
+
+.service-card p {
+  flex: 1 1 auto;
+  margin-bottom: 18px;
+}
+
+.service-card .btn {
+  margin-top: auto;
+  align-self: center;
+}
+
+/* Карточка товара / раздела "О компании" и т.п. — светлая, во всю ширину */
+article.product,
+main > article:not(.hero):not(.product-card) {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 32px;
+  margin-bottom: 16px;
+}
+
+main > article > img {
+  max-height: 340px;
+  width: auto;
+  object-fit: contain;
+  margin: 0 auto 16px;
+}
+
+/* Карточка товара по макету: оливковый фон, фото справа, кнопка под фото */
+main > article.product-card,
+.product-card {
+  background: var(--sage);
+  color: #1e1e1e;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 36px;
+  padding: 36px 40px;
+}
+
+.product-card .product-info {
+  flex: 1 1 420px;
+}
+
+.product-card .product-photo {
+  flex: 1 1 340px;
+  max-width: 460px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+}
+
+.product-card .product-photo img {
+  width: 100%;
+  height: 340px;
+  object-fit: contain;
+  background: #ffffff;
+  border-radius: var(--radius-sm);
+}
+
+.product-card .product-photo .photo-placeholder {
+  width: 100%;
+  max-width: 100%;
+  aspect-ratio: 4 / 3;
+  color: rgba(255, 255, 255, 0.85);
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+.product-card h1 {
+  display: table;
+  margin: 0 auto 22px;
+  padding-bottom: 12px;
+  border-bottom: 4px solid var(--gold);
+  font-size: 1.85rem;
+  text-align: center;
+}
+
+.product-card > .product-info > p {
+  margin: 0 0 24px;
+  font-size: 1.12rem;
+}
+
+.product-card form {
+  background: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.product-card form select {
+  background: var(--gold);
+  color: #3b2f13;
+  border: none;
+  border-radius: 999px;
+  padding: 14px 28px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  max-width: 360px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+.product-actions {
+  margin-top: 0;
+  width: 100%;
+  text-align: center;
+}
+
+.product-actions .btn {
+  display: inline-block;
+  min-width: 240px;
+}
+
+@media (max-width: 700px) {
+  .product-card {
+    flex-direction: column;
+    padding: 24px 20px;
+  }
+
+  .product-card .product-photo {
+    order: -1;
+    max-width: 100%;
+  }
+
+  .product-card .product-photo img {
+    height: 260px;
+  }
+}
+
+/* ---------- Списки услуг ---------- */
+main ul.plain {
+  list-style: none;
+  padding: 0;
+}
+
+main ul.plain li {
+  position: relative;
+  padding: 10px 0 10px 34px;
+}
+
+main ul.plain li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 14px;
+  width: 18px;
+  height: 18px;
+  background: var(--gold);
+  border-radius: 50%;
+}
+
+/* ---------- Формы ---------- */
+form {
+  background: var(--sage);
+  border-radius: var(--radius);
+  padding: 28px;
+  margin: 20px 0;
+}
+
+form label {
+  display: block;
+  color: #1e1e1e;
+  font-weight: 600;
+  margin: 12px 0 4px;
+}
+
+form input,
+form select,
+form textarea {
+  width: 100%;
+  padding: 14px 20px;
+  border: none;
+  border-radius: 28px;
+  font-size: 1.05rem;
+  font-family: inherit;
+  background: #ffffff;
+  transition: box-shadow 0.2s ease;
+}
+
+form input:focus,
+form select:focus,
+form textarea:focus,
+.filter-bar select:focus {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+form textarea {
+  border-radius: var(--radius-sm);
+  resize: vertical;
+}
+
+form button {
+  display: block;
+  margin: 24px auto 0;
+  padding: 14px 40px;
+  border: none;
+  border-radius: 28px;
+  background: var(--gold);
+  color: #3b2f13;
+  font-weight: 600;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+form button:hover {
+  background: var(--gold-dark);
+  transform: translateY(-1px);
+}
+
+form button.submit-order {
+  min-width: 240px;
+  font-size: 1.15rem;
+  box-shadow: 0 6px 16px rgba(59, 47, 19, 0.18);
+}
+
+/* Поисковая строка в каталоге — не занимает весь фон, только поле */
+form[role="search"] {
+  background: transparent;
+  padding: 0;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+form[role="search"] label {
+  color: var(--text);
+}
+
+form[role="search"] input {
+  flex: 1 1 240px;
+  background: #ffffff;
+  border: 1px solid var(--sage);
+}
+
+form[role="search"] button {
+  margin: 0;
+  padding: 14px 32px;
+}
+
+datalist {
+  display: none;
+}
+
+.btn {
+  display: inline-block;
+  padding: 14px 36px;
+  border-radius: 28px;
+  background: var(--gold);
+  color: #3b2f13;
+  font-weight: 600;
+  font-size: 1.1rem;
+  text-decoration: none;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.btn:hover {
+  background: var(--gold-dark);
+  transform: translateY(-1px);
+}
+
+/* Квадратная заглушка вместо фото, которого пока нет */
+.photo-placeholder {
+  width: 100%;
+  max-width: 260px;
+  aspect-ratio: 1 / 1;
+  margin: 0 auto 12px;
+  border: 2px dashed currentColor;
+  border-radius: var(--radius-sm);
+  opacity: 0.8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-style: italic;
+  padding: 12px;
+}
+
+/* ---------- Контакты ---------- */
+main section {
+  margin-bottom: 22px;
+}
+
+address {
+  font-style: normal;
+}
+
+address a {
+  font-weight: 600;
+}
+
+.contacts-card {
+  background: var(--sage);
+  border-radius: var(--radius);
+  padding: 44px 52px;
+  color: #1e1e1e;
+}
+
+.contacts-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.contacts-list li {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.contact-icon {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: var(--gold);
+  color: #3b2f13;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
+  transition: transform 0.25s ease;
+}
+
+.contacts-list li:hover .contact-icon {
+  transform: scale(1.08);
+}
+
+.contact-icon svg {
+  width: 28px;
+  height: 28px;
+  max-width: 28px;
+  max-height: 28px;
+  display: block;
+  flex-shrink: 0;
+}
+
+.contact-text h2 {
+  margin: 0 0 4px;
+  font-size: 1.35rem;
+  color: #1e1e1e;
+}
+
+.contact-text p {
+  margin: 0;
+  font-size: 1.05rem;
+  color: #1e1e1e;
+}
+
+.contact-text a {
+  color: inherit;
+  text-decoration: none;
+  font-weight: 400;
+}
+
+/* ==========================================================================
+   Узкий экран — что меняется:
+   - меню переходит в столбик, чтобы пункты не сжимались до нечитаемости;
+   - карточки (.grid) укладываются в один столбец вместо ряда;
+   - у hero уменьшается размер шрифта и картинка становится ниже;
+   - у формы поиска поле и кнопка растягиваются на всю ширину.
+   ========================================================================== */
+@media (max-width: 700px) {
+  header nav ul {
+    flex-direction: column;
+  }
+
+  header nav a {
+    display: block;
+    text-align: center;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .category-carousel {
+    padding: 16px 52px 14px;
+  }
+
+  .carousel-btn {
+    width: 38px;
+    height: 38px;
+  }
+
+  .carousel-prev {
+    left: 8px;
+  }
+
+  .carousel-next {
+    right: 8px;
+  }
+
+  .hero img {
+    height: 280px;
+  }
+
+  .hero h1 {
+    font-size: 1.5rem;
+    max-width: 85%;
+    top: 14%;
+  }
+
+  .hero p {
+    top: 78%;
+  }
+
+  form[role="search"] {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .contacts-card {
+    padding: 28px 20px;
+  }
+}
+
+/* ---------- JavaScript: ошибки формы и успешная заявка ---------- */
+.field-error {
+  min-height: 1.2em;
+  margin: 4px 0 0;
+  color: #4a150e;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.field-error:not(:empty) {
+  background: #fff4f2;
+  border-radius: 10px;
+  padding: 6px 12px;
+}
+
+input.is-invalid {
+  outline: 2px solid #c45c4a;
+  outline-offset: 2px;
+}
+
+.order-success {
+  background: var(--sage);
+  color: #1e1e1e;
+  border-radius: var(--radius);
+  padding: 40px 28px;
+  text-align: center;
+}
+
+.order-success h2 {
+  margin-bottom: 12px;
+}
+
+.order-success .btn {
+  margin-top: 16px;
+}
+
+.search-status {
+  margin: 8px 0 0;
+  color: #2f3b2c;
+}
+
+.product-loading {
+  min-height: 420px;
+}
+
+main img {
+  cursor: zoom-in;
+}
+
+.catalog-layout {
+  display: grid;
+  grid-template-columns: 240px minmax(0, 1fr);
+  gap: 28px;
+  align-items: start;
+  margin-top: 8px;
+}
+
+.filters {
+  margin: 0;
+  background: var(--sage);
+  color: #1e1e1e;
+  border-radius: var(--radius);
+  padding: 22px 18px;
+  position: sticky;
+  top: 16px;
+}
+
+.filters h2 {
+  color: #1e1e1e;
+  font-size: 1.2rem;
+  margin-bottom: 18px;
+}
+
+.filter-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: stretch;
+}
+
+.filter-bar label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.filter-bar select {
+  width: 100%;
+  min-width: 0;
+  padding: 12px 16px;
+  border: none;
+  border-radius: 28px;
+  font-size: 1rem;
+  font-family: inherit;
+  background: #ffffff;
+  transition: box-shadow 0.2s ease;
+}
+
+.filter-bar button {
+  width: 100%;
+  margin-top: 4px;
+  padding: 12px 28px;
+  border: none;
+  border-radius: 28px;
+  background: var(--gold);
+  color: #3b2f13;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.filter-bar button:hover {
+  background: var(--gold-dark);
+  transform: translateY(-1px);
+}
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(30, 30, 30, 0.82);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 24px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+.lightbox.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.lightbox img {
+  max-width: min(920px, 92vw);
+  max-height: 88vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  background: #ffffff;
+  border-radius: var(--radius-sm);
+  cursor: default;
+  transform: scale(0.96);
+  transition: transform 0.25s ease;
+}
+
+.lightbox.is-open img {
+  transform: scale(1);
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 16px;
+  right: 22px;
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 50%;
+  background: var(--gold);
+  color: #3b2f13;
+  font-size: 1.8rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.lightbox-close:hover {
+  background: var(--gold-dark);
+  transform: scale(1.08);
+}
+
+/* ---------- Спокойные анимации ---------- */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+main {
+  animation: fade-up 0.45s ease both;
+}
+
+.hero img {
+  animation: fade-in 0.7s ease both;
+}
+
+.grid .card {
+  animation: fade-up 0.4s ease backwards;
+}
+
+.grid .card:nth-child(1) { animation-delay: 0.02s; }
+.grid .card:nth-child(2) { animation-delay: 0.06s; }
+.grid .card:nth-child(3) { animation-delay: 0.1s; }
+.grid .card:nth-child(4) { animation-delay: 0.14s; }
+.grid .card:nth-child(5) { animation-delay: 0.18s; }
+.grid .card:nth-child(6) { animation-delay: 0.22s; }
+.grid .card:nth-child(n + 7) { animation-delay: 0.26s; }
+
+.category-carousel,
+.filters,
+.contacts-card,
+.product-card,
+.order-success {
+  animation: fade-up 0.45s ease backwards;
+}
+
+.carousel-slide img {
+  transition: transform 0.3s ease;
+}
+
+.carousel-slide:hover img {
+  transform: scale(1.03);
+}
+
+input.is-invalid {
+  transition: outline-color 0.2s ease;
+}
+
+@media (max-width: 700px) {
+  .catalog-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .filters {
+    position: static;
+  }
+
+  .category-carousel {
+    min-height: 360px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

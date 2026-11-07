@@ -1,0 +1,68 @@
+# БазМет — работа № 13
+# Запуск из этой папки (рядом папка ./database (уже в репозитории)):
+#   docker compose up --build
+# Сайт: http://127.0.0.1:8080
+
+name: bazmet
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: bazmet-db
+    environment:
+      POSTGRES_DB: bazmet
+      POSTGRES_USER: bazmet
+      POSTGRES_PASSWORD: bazmet
+    volumes:
+      - bazmet_pgdata:/var/lib/postgresql/data
+      - ./database/docker/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bazmet -d bazmet"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    restart: unless-stopped
+
+  api:
+    build:
+      context: ./database
+      dockerfile: Dockerfile
+    container_name: bazmet-api
+    environment:
+      HOST: 0.0.0.0
+      PORT: 3001
+      DATABASE_URL: postgresql://bazmet:bazmet@db:5432/bazmet
+      ORDERS_DATABASE_URL: postgresql://bazmet:bazmet@db:5432/bazmet_orders
+      ADMIN_DATABASE_URL: postgresql://bazmet:bazmet@db:5432/postgres
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "fetch('http://127.0.0.1:3001/api/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 60s
+    restart: unless-stopped
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: bazmet-web
+    ports:
+      - "8080:80"
+    depends_on:
+      api:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  bazmet_pgdata:
